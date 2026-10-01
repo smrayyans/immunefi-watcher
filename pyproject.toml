@@ -1,0 +1,12 @@
+[project]
+name = "immunefi-watcher"
+version = "0.1.0"
+description = "Local database and interactive terminal UI for Immunefi bug bounty programs, with new-asset tracking"
+requires-python = ">=3.10"
+dependencies = ["textual>=8.0", "httpx>=0.27"]
+
+[project.scripts]
+iw = "iw.cli:main"
+
+[tool.setuptools]
+packages = ["iw"]

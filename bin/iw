@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Launcher: runs the tool from its own virtualenv regardless of cwd.
+here="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+exec env PYTHONPATH="$here" "$here/.venv/bin/python" -m iw "$@"
