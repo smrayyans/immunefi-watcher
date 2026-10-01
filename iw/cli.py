@@ -232,9 +232,9 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("note", nargs="*")
     s.set_defaults(fn=cmd_mark)
 
-    s = sub.add_parser("prepare", help="create bug-bounty/<slug>/SCOPE.md + targets.txt for a program")
+    s = sub.add_parser("prepare", help="create <slug>/SCOPE.md + targets.txt for a program")
     s.add_argument("slug")
-    s.add_argument("--dir", help="parent directory (default: the bug-bounty folder)")
+    s.add_argument("--dir", help="parent directory (default: the folder containing this project, or $IW_PROGRAMS_DIR)")
     s.add_argument("--force-new", action="store_true", help="if SCOPE.md exists, write SCOPE.new.md beside it")
     s.add_argument("--overwrite", action="store_true", help="replace SCOPE.md (asks first, saves a backup)")
     s.add_argument("-y", "--yes", action="store_true", help="skip the overwrite question")

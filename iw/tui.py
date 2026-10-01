@@ -64,7 +64,7 @@ HELP = """\
   w  cycle new-asset window (1d 3d 7d 14d 30d 90d)
   s  cycle sort                      r  sync from Immunefi now
   m  mark program: hunt > skip > done > none
-  p  prepare folder: creates bug-bounty/<slug>/ with SCOPE.md + targets.txt; asks before touching an existing SCOPE.md
+  p  prepare folder: creates <slug>/ with SCOPE.md + targets.txt; asks before touching an existing SCOPE.md
   o  open asset (new-assets view) or program page in browser      O  open program page
   c  copy asset url / program url    [ ]  previous / next detail tab     z  hide/show detail pane
   ?  this help                       q  quit

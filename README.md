@@ -2,7 +2,7 @@
 
 A local database and interactive terminal UI for Immunefi bug bounty programs. It pulls every program's scope,
 rewards, rules, known issues and audits into SQLite, lets you filter them live, shows which programs added new
-assets recently, and prepares a `bug-bounty/<program>/SCOPE.md` folder with one key press.
+assets recently, and prepares a `<program>/SCOPE.md` folder with one key press.
 
 Built to answer one question quickly: which program should I hunt next?
 
@@ -14,20 +14,29 @@ rules are deliberately left out, with only a marker showing that a program also 
 
 ---
 
+![immunefi-watcher](docs/screenshot.png)
+
+## Install
+
+Requires Python 3.10 or newer and a terminal with colour support.
+
+```bash
+git clone https://github.com/smrayyans/immunefi-watcher.git
+cd immunefi-watcher
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+bin/iw              # opens the interactive UI (syncs automatically on first launch)
+```
+
+Optional shell alias, in `~/.bashrc` or `~/.zshrc`:
+
+```bash
+alias iwatch="/full/path/to/immunefi-watcher/bin/iw"
+```
+
+The examples below use `iwatch`; `bin/iw` does the same. The alias is named `iwatch` rather than `iw` because
+`/usr/sbin/iw` is the Linux wireless tool and an `iw` alias would hide it.
+
 ## Quick start
-
-```bash
-cd ~/Downloads/Github/bug-bounty/immunefi-watcher
-bin/iw              # opens the interactive UI (syncs automatically when data is stale)
-```
-
-An alias is set up in `~/.zshrc`, so in a new terminal you can run:
-
-```bash
-iwatch
-```
-
-It is called `iwatch`, not `iw`, because `/usr/sbin/iw` is the Linux wireless tool and an `iw` alias would hide it.
 
 Typical session:
 
@@ -37,7 +46,7 @@ Typical session:
 4. Press `/` and type filters to narrow down, for example `pays:hc new:30d asset:contract`.
 5. Move through the list. The right pane shows the program. Use `[` and `]` to switch its tabs.
 6. Press `m` to mark a program (hunt, skip, done).
-7. Press `p` on the program you pick. It creates `bug-bounty/<program>/SCOPE.md` and `targets.txt`.
+7. Press `p` on the program you pick. It creates `<program>/SCOPE.md` and `targets.txt` next to the tool's folder.
 
 No cron job or background process is used. The tool only runs while you have it open.
 
@@ -246,10 +255,10 @@ from `addedAt`.
 ## Prepare folder
 
 Opening the **Prepare folder** tab, pressing `p`, or running `iwatch prepare <slug>` creates a folder for the
-selected program under `bug-bounty/`, named after the program slug in lowercase (for example `bug-bounty/onre/`),
-with:
+selected program in the parent directory of this project (override with `IW_PROGRAMS_DIR`), named after the
+program slug in lowercase (for example `onre/`), with:
 
-- `SCOPE.md`, in the same layout as your other program folders. It contains: provenance line, program facts (live
+- `SCOPE.md`, a single Markdown scope document. It contains: provenance line, program facts (live
   date, KYC, max bounty, reward token, tiers, 10% rule, PoC requirements, Paid submission, features, pools,
   language, ecosystem, links), overview, all smart contract / blockchain assets grouped by type with added dates and
   a **NEW** tag for the last 30 days, the rewards table and reward details, impacts in scope by severity, out of
@@ -322,7 +331,7 @@ There is no cron job or timer. If you want one later, run `iwatch sync` from you
 | Item | Where |
 |---|---|
 | Database | `~/.local/share/immunefi-watcher/iw.db` (override with `IW_DB`). Holds programs, assets, change events, sync history and your marks. |
-| Program folders | The `bug-bounty/` folder (override with `IW_PROGRAMS_DIR`). |
+| Program folders | The directory that contains this project's folder (override with `IW_PROGRAMS_DIR`). |
 | Startup filter | `DEFAULT_FILTER = "paid:no"` in `iw/tui.py`. |
 | Auto-sync age | `AUTO_SYNC_HOURS = 4` in `iw/tui.py`. |
 | Column widths | `PROG_COLS`, `FEED_COLS`, `EVENT_COLS` in `iw/tui.py`. |
@@ -374,3 +383,10 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 - **Narrow terminals.** Column widths are fixed, so on a narrow window the table scrolls sideways instead of
   squeezing columns. Press `z` to hide the detail pane and get the full width.
 - **`iw` versus `iwatch`.** Use `iwatch`. Plain `iw` is the system wireless tool.
+
+---
+
+## License
+
+MIT, see [LICENSE](LICENSE). This is an unofficial tool and is not affiliated with Immunefi. It reads Immunefi's
+public, undocumented directory endpoint, which can change without notice.

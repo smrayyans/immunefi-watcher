@@ -1,7 +1,6 @@
-"""Prepare a program folder: bug-bounty/<slug>/SCOPE.md (+ targets.txt) from the stored Immunefi record.
+"""Prepare a program folder: <root>/<slug>/SCOPE.md (+ targets.txt) from the stored Immunefi record.
 
-The layout mirrors existing program folders (e.g. bug-bounty/livepeer/SCOPE.md). It never overwrites a
-SCOPE.md you already have: that file collects hand-written rejection rules and notes.
+It never overwrites a SCOPE.md you already have: that file tends to collect hand-written notes and rules.
 """
 
 from __future__ import annotations
